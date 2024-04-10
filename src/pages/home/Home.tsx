@@ -1,8 +1,8 @@
 const Home = () => {
   return (
-    <div className="container">
+    <div className="flex flex-col items-center">
       <h1>Home</h1>
-      <img src="https://github.com/Apenasgabs.png" alt="" />
+      <img className="w-1/2" src="https://github.com/Apenasgabs.png" alt="" />
     </div>
   );
 };
