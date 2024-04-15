@@ -1,4 +1,6 @@
 import axios from "axios";
+import { UserProfile } from "../models/UserProfile";
+import { Dispatch, SetStateAction } from "react";
 
 const baseURl = "";
 const api = axios.create({
@@ -8,7 +10,7 @@ interface RequestPros {
   url: string;
   data: object;
   header?: object;
-  setData: (data: object) => void;
+  setData: Dispatch<SetStateAction<UserProfile>>;
 }
 export const registerUser = async ({ url, data, setData }: RequestPros) => {
   const response = await api.post(url, data);
