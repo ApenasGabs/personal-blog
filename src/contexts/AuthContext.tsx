@@ -19,7 +19,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProfile>({
     id: 0,
     name: "",
-    username: "",
+    email: "",
     password: "",
     photo: "",
     token: "",
@@ -29,7 +29,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function handleLogin(credentials: UserProfile) {
     const userLoginData = {
-      url: "/users/login",
+      url: "/user/login",
       data: credentials,
       setData: setUser,
     };
@@ -49,7 +49,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser({
       id: 0,
       name: "",
-      username: "",
+      email: "",
       password: "",
       photo: "",
       token: "",
