@@ -2,7 +2,7 @@ import axios from "axios";
 import { UserProfile } from "../models/UserProfile";
 import { Dispatch, SetStateAction } from "react";
 
-const baseURl = "";
+const baseURl = "https://blog.server.apenasgabs.dev/";
 const api = axios.create({
   baseURL: baseURl,
 });
