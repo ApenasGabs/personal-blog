@@ -6,6 +6,7 @@ export interface UserProfile {
   email: string;
   photo: string;
   password: string;
+  confirmPassword?: string;
   post?: Post | null;
   token: "";
 }

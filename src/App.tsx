@@ -5,6 +5,8 @@ import NotFound from "./pages/notFound/NotFound";
 import Login from "./pages/login/Login";
 import Navbar from "./components/navbar/Navbar";
 import { AuthProvider } from "./contexts/AuthContext";
+import SignUp from "./pages/SignUp/SignUp";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -14,10 +16,12 @@ function App() {
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/home" element={<Home />} />
-            <Route path="/Login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
   );
