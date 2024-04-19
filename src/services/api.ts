@@ -1,7 +1,5 @@
 import axios from "axios";
-import { UserProfile } from "../models/UserProfile";
 import { Dispatch, SetStateAction } from "react";
-import ThemeProps from "../models/Theme";
 
 const baseURl = "https://blog.server.apenasgabs.dev/";
 const api = axios.create({
