@@ -1,15 +1,23 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserProfile } from "../../models/UserProfile";
+import { registerUser } from "../../services/api";
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState<UserProfile>(
     {} as UserProfile
   );
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  const { isLoading, user, handleLogin } = useContext(AuthContext);
+  const { isLoading, user } = useContext(AuthContext);
 
   useEffect(() => {
     if (user.token !== "") {
@@ -17,24 +25,79 @@ const Login = () => {
     }
   }, [navigate, user]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("e: ", e);
+  useEffect(() => {
+    setPasswordsMatch(
+      userCredentials.password === userCredentials.confirmPassword
+    );
+  }, [userCredentials.password, userCredentials.confirmPassword]);
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserCredentials({
       ...userCredentials,
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmitLogin = (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleLogin(userCredentials);
-  };
+
+  const handleSubmitSignUp = useCallback(
+    async (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      console.log("to aqui ");
+      if (passwordsMatch) {
+        registerUser({
+          url: "/user/register",
+          data: userCredentials,
+          setData: setUserCredentials,
+        });
+      }
+    },
+    [passwordsMatch, userCredentials]
+  );
   return (
-    <div className="flex justify-center items-center w-screen h-screen ">
+    <div className="flex justify-center items-center w-screen ">
       <form
         className="flex justify-center items-center flex-col w-1/2 gap-4 p-10"
-        onSubmit={handleSubmitLogin}
+        onSubmit={handleSubmitSignUp}
       >
+        {" "}
+        <label className="input input-bordered flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-4 h-4 opacity-70"
+          >
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+          </svg>
+
+          <input
+            onChange={handleInputChange}
+            type="text"
+            id="photo"
+            name="photo"
+            value={userCredentials.photo}
+            className="grow"
+            placeholder="GitHub Username"
+          />
+        </label>
+        <label className="input input-bordered flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-4 h-4 opacity-70"
+          >
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+          </svg>
+          <input
+            onChange={handleInputChange}
+            type="text"
+            id="name"
+            name="name"
+            value={userCredentials.name}
+            className="grow"
+            placeholder="Name"
+          />
+        </label>
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -62,6 +125,26 @@ const Login = () => {
             fill="currentColor"
             className="w-4 h-4 opacity-70"
           >
+            <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+            <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+          </svg>
+          <input
+            onChange={handleInputChange}
+            name="password"
+            id="password"
+            type="password"
+            className="grow"
+            placeholder="Password"
+            value={userCredentials.password}
+          />
+        </label>
+        <label className="input input-bordered flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-4 h-4 opacity-70"
+          >
             <path
               fillRule="evenodd"
               d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
@@ -70,14 +153,18 @@ const Login = () => {
           </svg>
           <input
             onChange={handleInputChange}
-            name="password"
-            id="password"
+            name="confirmPassword"
+            id="confirmPassword"
             type="password"
             className="grow"
-            value={userCredentials.password}
+            placeholder="Confirm your password"
+            value={userCredentials.confirmPassword}
           />
         </label>
-        <button type="submit" onClick={() => handleSubmitLogin}>
+        {!passwordsMatch && (
+          <p className="text-red-500">Passwords do not match! </p>
+        )}
+        <button type="submit" disabled={!passwordsMatch}>
           {isLoading ? (
             <div role="status">
               <svg
@@ -98,7 +185,7 @@ const Login = () => {
               </svg>
             </div>
           ) : (
-            <p>Log me in 🤠</p>
+            <p>Register me 🤠</p>
           )}
         </button>
       </form>
@@ -106,4 +193,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

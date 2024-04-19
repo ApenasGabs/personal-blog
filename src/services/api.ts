@@ -1,16 +1,15 @@
 import axios from "axios";
-import { UserProfile } from "../models/UserProfile";
 import { Dispatch, SetStateAction } from "react";
 
-const baseURl = "";
+const baseURl = "https://blog.server.apenasgabs.dev/";
 const api = axios.create({
   baseURL: baseURl,
 });
 interface RequestPros {
   url: string;
-  data: object;
+  data?: object;
   header?: object;
-  setData: Dispatch<SetStateAction<UserProfile>>;
+  setData: Dispatch<SetStateAction<any>>;
 }
 export const registerUser = async ({ url, data, setData }: RequestPros) => {
   const response = await api.post(url, data);
@@ -22,7 +21,7 @@ export const login = async ({ url, data, setData }: RequestPros) => {
   setData(response.data);
 };
 
-export const fetch = async ({ url, header, setData }: RequestPros) => {
+export const fetchData = async ({ url, header, setData }: RequestPros) => {
   const response = await api.get(url, header);
   setData(response.data);
 };
