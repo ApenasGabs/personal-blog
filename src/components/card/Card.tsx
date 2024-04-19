@@ -7,17 +7,18 @@ interface CardProps {
   onClickSecondaryButton?: () => void;
 }
 const Card = ({
-  title = "Oiiiiii",
+  title = "Title",
   onClickPrimaryButton,
   onClickSecondaryButton,
-
-  content = "If a dog chews shoes whose shoes does he choose?",
+  primaryButtonText = "Edit",
+  secondaryButtonText = "Delete",
+  content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vulputate eu leo ac laoreet. Donec egestas tellus id vehicula fringilla. Phasellus varius et ante sed luctus.",
 }: CardProps) => {
   return (
     <div className="card card-compact w-96 bg-base-100 shadow-xl flex flex-col justify-between h-full">
       <div className="card-body">
-        <h2 className="card-title">{title}</h2>
-        <p>{content}</p>
+        {title && <h2 className="card-title">{title}</h2>}
+        {content && <p>{content}</p>}
       </div>
       <div className="card-actions justify-center">
         {onClickPrimaryButton && (
@@ -25,7 +26,7 @@ const Card = ({
             onClick={onClickPrimaryButton}
             className="btn btn-secondary flex-grow"
           >
-            Delete
+            {secondaryButtonText}
           </button>
         )}
         {onClickSecondaryButton && (
@@ -33,7 +34,7 @@ const Card = ({
             onClick={onClickSecondaryButton}
             className="btn btn-primary flex-grow"
           >
-            Edit
+            {primaryButtonText}
           </button>
         )}
       </div>
