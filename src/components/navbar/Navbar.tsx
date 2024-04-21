@@ -1,10 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
-
+  const { user, handleLogout } = useContext(AuthContext);
+  console.log("user.photo : ", user.photo);
+  const navigate = useNavigate();
+  const logMeOut = () => {
+    () => handleLogout();
+    navigate("/login");
+  };
+  const githubUserProfileImage = `https://github.com/${user.photo}.png`;
   return (
     <div className="navbar bg-base-100 w-full ">
       {user.id !== 0 && (
@@ -29,7 +35,10 @@ const Navbar = () => {
               >
                 <div className="w-10 rounded-full">
                   {user.photo !== "" ? (
-                    <img alt="image from user profile" src={user.photo} />
+                    <img
+                      alt="image from user profile"
+                      src={githubUserProfileImage}
+                    />
                   ) : (
                     <>
                       <span className="text-xl">{user.name[0]}</span>
@@ -51,7 +60,7 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <a onClick={logMeOut}>Logout</a>
                 </li>
               </ul>
             </div>
