@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
-  console.log("user: ", user);
 
   return (
     <div className="navbar bg-base-100 w-full ">

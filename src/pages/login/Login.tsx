@@ -18,8 +18,6 @@ const Login = () => {
   }, [navigate, user]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("e: ", e);
-
     setUserCredentials({
       ...userCredentials,
       [e.target.name]: e.target.value,
