@@ -14,7 +14,7 @@ const Theme = () => {
   const fetchThemes = useCallback(async () => {
     try {
       await fetchData({
-        url: "/themes",
+        url: "/theme",
         header: { headers: { Authorization: token } },
         setData: setThemes,
       });
