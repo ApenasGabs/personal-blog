@@ -1,23 +1,26 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
   console.log("user: ", user);
 
   return (
-    <div className="navbar bg-base-100">
-      {user.id === 0 && (
+    <div className="navbar bg-base-100 w-full ">
+      {user.id !== 0 && (
         <>
           <div className="flex-1">
-            <a className="btn btn-ghost text-xl">daisyUI</a>
+            <a className="btn btn-ghost text-xl">PersonalBlog</a>
           </div>
           <div className="flex-none">
             <ul className="menu menu-horizontal px-1">
               <li>
-                <a>Link</a>
+                <Link to={"/home"}>Home</Link>
               </li>
-              <li></li>
+              <li>
+                <Link to={"/theme"}>Theme</Link>
+              </li>
             </ul>
             <div className="dropdown dropdown-end">
               <div
@@ -26,7 +29,13 @@ const Navbar = () => {
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 rounded-full">
-                  <img alt="image from ApenasGabs profile" src={user.photo} />
+                  {user.photo !== "" ? (
+                    <img alt="image from user profile" src={user.photo} />
+                  ) : (
+                    <>
+                      <span className="text-xl">{user.name[0]}</span>
+                    </>
+                  )}{" "}
                 </div>
               </div>
               <ul

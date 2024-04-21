@@ -1,10 +1,17 @@
-import { createContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
 import { UserProfile } from "../models/UserProfile";
 import { login } from "../services/api";
 
 interface AuthContextProps {
   user: UserProfile;
+  setUser: Dispatch<SetStateAction<UserProfile>>;
   handleLogout(): void;
   handleLogin(UserProfile: UserProfile): Promise<void>;
   isLoading: boolean;
@@ -58,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, handleLogin, handleLogout, isLoading }}
+      value={{ user, handleLogin, handleLogout, isLoading, setUser }}
     >
       {children}
     </AuthContext.Provider>
