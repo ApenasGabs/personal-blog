@@ -4,13 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user, handleLogout } = useContext(AuthContext);
-  console.log("user.photo : ", user.photo);
   const navigate = useNavigate();
+
   const logMeOut = () => {
-    () => handleLogout();
+    handleLogout();
     navigate("/login");
   };
+
   const githubUserProfileImage = `https://github.com/${user.photo}.png`;
+  const hasProfileImage = user.photo.trim() !== "";
+
   return (
     <div className="navbar bg-base-100 w-full ">
       {user.id !== 0 && (
@@ -27,23 +30,23 @@ const Navbar = () => {
                 <Link to={"/theme"}>Theme</Link>
               </li>
             </ul>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-end ">
               <div
                 tabIndex={0}
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
-                  {user.photo !== "" ? (
+                <div className="w-10 rounded-full align-center">
+                  {hasProfileImage ? (
                     <img
                       alt="image from user profile"
                       src={githubUserProfileImage}
                     />
                   ) : (
-                    <>
-                      <span className="text-xl">{user.name[0]}</span>
-                    </>
-                  )}{" "}
+                    <p className="w-full h-full flex justify-center items-center ">
+                      <span>{user.name[0]}</span>
+                    </p>
+                  )}
                 </div>
               </div>
               <ul
