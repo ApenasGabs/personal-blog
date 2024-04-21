@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserProfile } from "../../models/UserProfile";
 
@@ -13,7 +13,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user.token !== "") {
-      navigate("/home");
+      navigate("/theme");
     }
   }, [navigate, user]);
 
@@ -101,6 +101,9 @@ const Login = () => {
             <p>Log me in 🤠</p>
           )}
         </button>
+        <Link className="text-xs" to="/register">
+          Not have an account yet?🧐
+        </Link>
       </form>
     </div>
   );
