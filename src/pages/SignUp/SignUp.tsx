@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserProfile } from "../../models/UserProfile";
 import { registerUser } from "../../services/api";
@@ -17,7 +17,7 @@ const SignUp = () => {
   );
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  const { isLoading, user } = useContext(AuthContext);
+  const { isLoading, user, setUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (user.token !== "") {
@@ -41,16 +41,16 @@ const SignUp = () => {
   const handleSubmitSignUp = useCallback(
     async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log("to aqui ");
+
       if (passwordsMatch) {
         registerUser({
           url: "/user/register",
           data: userCredentials,
-          setData: setUserCredentials,
+          setData: setUser,
         });
       }
     },
-    [passwordsMatch, userCredentials]
+    [passwordsMatch, setUser, userCredentials]
   );
   return (
     <div className="flex justify-center items-center w-screen ">
@@ -58,7 +58,6 @@ const SignUp = () => {
         className="flex justify-center items-center flex-col w-1/2 gap-4 p-10"
         onSubmit={handleSubmitSignUp}
       >
-        {" "}
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -162,9 +161,13 @@ const SignUp = () => {
           />
         </label>
         {!passwordsMatch && (
-          <p className="text-red-500">Passwords do not match! </p>
+          <p className="text-red-500 text-xs">Passwords do not match! </p>
         )}
-        <button type="submit" disabled={!passwordsMatch}>
+        <button
+          className="btn-active btn-primary"
+          type="submit"
+          disabled={!passwordsMatch}
+        >
           {isLoading ? (
             <div role="status">
               <svg
@@ -188,6 +191,9 @@ const SignUp = () => {
             <p>Register me 🤠</p>
           )}
         </button>
+        <Link className="text-xs" to={"/login"}>
+          Already has an account?🤔
+        </Link>
       </form>
     </div>
   );

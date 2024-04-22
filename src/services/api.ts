@@ -39,3 +39,7 @@ export const update = async ({ url, header, data, setData }: RequestPros) => {
 export const deleteUser = async (url: string, header: object) => {
   await api.delete(url, header);
 };
+
+export const deleteData = async ({ url, header }: RequestPros) => {
+  await api.delete(url, header);
+};
