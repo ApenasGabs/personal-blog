@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Footer from "./components/footer/Footer";
 import Theme from "./pages/theme/Theme";
 import NotFound from "./pages/notFound/NotFound";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/theme" element={<Theme />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
