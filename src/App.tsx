@@ -9,12 +9,15 @@ import Footer from "./components/footer/Footer";
 import Theme from "./pages/theme/Theme";
 import NotFound from "./pages/notFound/NotFound";
 import Profile from "./pages/profile/Profile";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Navbar />
+        <ToastContainer />
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/home" element={<Home />} />
